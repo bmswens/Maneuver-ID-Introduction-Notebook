@@ -25,7 +25,7 @@ The U.S. Air Force released a dataset from Pilot Training Next (PTN) through the
 4. Grading Maneuvers
 
 ## Scope
-This notebook aims to take you through seeing and understanding the data for the first time, all the way to creating a convolutional neural network aimed at answer challenge #1.
+This notebook aims to take you through seeing and understanding the data for the first time, all the way to creating a convolutional neural network aimed at answering challenge #1.
 
 ## Maneuvers
 There are 18 maneuvers, but many have sub-classes, for a total of 29 maneuvers, listed below:
