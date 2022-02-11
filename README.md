@@ -20,7 +20,7 @@ The U.S. Air Force released a dataset from Pilot Training Next (PTN) through the
 ## The Challenge(s)
 
 1. Sorting "useful" vs "non-useful" data
-2. Seperating "useful" data
+2. Separating "useful" data
 3. Identifying Maneuvers
 4. Grading Maneuvers
 
