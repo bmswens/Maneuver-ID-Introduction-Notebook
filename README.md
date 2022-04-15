@@ -921,6 +921,7 @@ Listed below are a few ideas to get your started.
  - Kyle McAplin - Feedback
  - [Armando Cabrera](https://github.com/cabreraaa) - Feedback
  - [Chantz Yazzie](https://github.com/chantzyaz) - Contributor
+ - [Dan Zhao](https://www.linkedin.com/in/dan-z-39942143/] - Idea for CNN based on graph images
 
 ## Acknowledgment
 If you would like to acknowledge this notebook in your paper or report, we recommend the following:
