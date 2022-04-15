@@ -376,24 +376,33 @@ def remove_runway_data(data, minimum=100):
 ```
 
 ## Calculate Airspeed
-In this process, we're going to remove the independent `vx (m/s)` and `vy (m/s)` fields, and add them into a single field, then remove the two fields used to calculate it.
+In this process, we're going to remove the independent vx (m/s), vy (m/s), and vz (m/s) fields, and add them into a single field, then remove the three fields used to calculate it.
 
-Reason: The written parameters of what define a good maneuver vs a bad maneuver take airspeed into account. As humans, we often don't care about whether an aircraft is going North at 10 m/s and East at 2 m/s, we care more tha they are going 12 m/s with heading of 45 degrees. Perhaps the model may perform better to have the data the same way? 
+Reason: The written parameters of what define a good maneuver vs a bad maneuver take airspeed into account in order to avoid stalls and going above operation limitations of the aircraft. Airspeed = Ground Speed - Wind Speed. Our three velocities are in relation to the ground so in order to calculate the airspeed of the aircraft we have to assume that there is zero wind for the entirety of the flight. With zero wind, we now have Airspeed = Ground Speed. Treating the three velocities as components of a vector we can calculate the magnitude of the vector to give us airspeed with a helper method. Since our velocities units are given to us in m/s we need to convert it to knots with a helper method.
 
 
 
 ```python
+def convert_ms_to_knot(x):
+    # m/s * 60s/min * 60min/hr * nm/1852m
+    return x * ((60 ** 2) / 1852)
+
+def calc_3d_vector_magnitude(x, y, z):
+    # For help with understanding magnitude of a vector please visit link.
+    # https://www.cuemath.com/magnitude-of-a-vector-formula/
+    return ((x ** 2) + (y ** 2) + (z ** 2)) ** 0.5
+
 def calculate_airspeed(data):
     output = []
     for row in data:
         vx = row["vx (m/s)"]
         vy = row["vy (m/s)"]
-        velocity = ((vx ** 2) + (vy ** 2)) ** 0.5
-        # add vy as well?
-        # I don't know physics
+        vz = row["vz (m/s)"]
+        magnitude = calc_3d_vector_magnitude(vx, vy, vz)
         row.pop("vx (m/s)", None)
         row.pop("vy (m/s)", None)
-        row["airspeed"] = velocity
+        row.pop("vz (m/s)", None)
+        row["airspeed (knot)"] = convert_ms_to_knot(magnitude)
         output.append(row)
     return output
 ```
@@ -910,7 +919,8 @@ Listed below are a few ideas to get your started.
  - [Brandon Swenson](https://github.com/bmswens) - Author
  - Jonathan Hurrell - Feedback
  - Kyle McAplin - Feedback
- - Armando Cabrera - Feedback
+ - [Armando Cabrera](https://github.com/cabreraaa) - Feedback
+ - [Chantz Yazzie](https://github.com/chantzyaz) - Contributor
 
 ## Acknowledgment
 If you would like to acknowledge this notebook in your paper or report, we recommend the following:
